@@ -1,4 +1,37 @@
+import { validationResult } from "express-validator";
+
 // filterTasks
+
+// Create Task
+
+export const createTask = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        const { title, description, dueDate, priority, status, category } = req.body;
+
+        const newTask = new Task({
+        title,
+        description,
+        dueDate,
+        priority,
+        status,
+        category,
+        user: req.user._id
+        });
+
+        const savedTask = await newTask.save();
+
+        res.status(201).json({ status: "success", data: savedTask });
+    } catch (err) {
+        res.status(400).json({ error: "Server error", details: err.message });
+    }
+};
+
+
 
 export const filterTasks = async (req,res) => {
     try{
