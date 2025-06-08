@@ -31,6 +31,30 @@ export const createTask = async (req, res) => {
     }
 };
 
+// update task
+
+export const updateTask = async (req, res) => {
+    const taskId = req.params.id;
+
+    try {
+        const updatedTask = await Task.findByIdAndUpdate(
+        taskId,
+        req.body,
+        { new: true } // Return the updated task
+        );
+
+        if (!updatedTask) {
+        return res.status(404).json({ status: "fail", data: "Task not found" });
+        }
+
+        res.json({ task: updatedTask });
+    } catch (err) {
+        res.status(400).json({ error: "Server error", details: err.message });
+    }
+};
+
+
+
 
 
 export const filterTasks = async (req,res) => {
