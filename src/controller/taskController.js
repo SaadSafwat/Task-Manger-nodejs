@@ -1,7 +1,5 @@
 import { validationResult } from "express-validator";
 
-// filterTasks
-
 // Create Task
 
 export const createTask = async (req, res) => {
@@ -71,7 +69,7 @@ export const deleteTask = async (req, res) => {
     }
 };
 
-
+// filterTasks
 export const filterTasks = async (req,res) => {
     try{
         const {category,priority,status} = req.query;
